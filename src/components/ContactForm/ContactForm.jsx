@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import s from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import * as actions from '../../redux/actions';
+
 
 function ContactForm({ onSubmit }) {
 
@@ -27,8 +30,17 @@ function ContactForm({ onSubmit }) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        onSubmit({ name, number });
+
+        const obj = {
+            name: evt.target.elements.inputName.value,
+            number: evt.target.elements.inputNumber.value
+        }
+        console.log(obj);
+        // const { name, value } = evt.target;
+        // onSubmit({ name, number });
+        // valueStore.push({ name: { name }, number: { number } })
         resetContactForm();
+        evt.target.reset();
     };
 
     const resetContactForm = () => {
@@ -46,12 +58,12 @@ function ContactForm({ onSubmit }) {
                 <input
                     autoComplete="off"
                     type="text"
-                    name="name"
+                    name="inputName"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
                     required
-                    onChange={handleChange}
-                    value={name}
+                    // onChange={handleChange}
+                    // value={name}
                     id={nameInputId}
                 />
             </label>
@@ -60,12 +72,12 @@ function ContactForm({ onSubmit }) {
                 <input
                     autoComplete="off"
                     type="tel"
-                    name="number"
+                    name="inputNumber"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
                     required
-                    onChange={handleChange}
-                    value={number}
+                    // onChange={handleChange}
+                    // value={number}
                     id={numberInputId}
                 />
             </label>
@@ -74,9 +86,20 @@ function ContactForm({ onSubmit }) {
     )
 }
 
+const mapStateToProps = state => ({
+
+    valueStore: state.contacts.items,
+
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (nn) => dispatch(actions.addContact(nn)),
+    // onDecrement: value => dispatch(actions.decrement(value)),
+});
+
 ContactForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 
 }
 
-export default ContactForm;
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
