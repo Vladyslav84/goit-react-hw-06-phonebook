@@ -84,9 +84,9 @@ class App extends Component {
       <div className={s.container}>
         <h1 className={s.title}>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmithandler} />
-        <h2 className={s.title}>Contacts</h2>
-        <Filter value={this.state.filtered} onChange={this.filtеredValue} />
-        <ContactList
+        {true && <><h2 className={s.title}>Contacts</h2>
+        <Filter value={this.state.filtered} onChange={this.filtеredValue} /></>}
+       <ContactList
           contactsArr={filteredContactList}
           onDeleteContact={this.deleteContact}
         />
