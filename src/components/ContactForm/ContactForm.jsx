@@ -6,48 +6,48 @@ import PropTypes from 'prop-types';
 import * as actions from '../../redux/actions';
 
 
-function ContactForm({ onSubmit }) {
+function ContactForm() {
 
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+    // const [name, setName] = useState('');
+    // const [number, setNumber] = useState('');
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        switch (name)
-        {
-            case 'name':
-                setName(value);
-                break;
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     switch (name)
+    //     {
+    //         case 'name':
+    //             setName(value);
+    //             break;
 
-            case 'number':
-                setNumber(value);
-                break;
+    //         case 'number':
+    //             setNumber(value);
+    //             break;
 
-            default:
-                return;
-        }
-    };
+    //         default:
+    //             return;
+    //     }
+    // };
 
     const handleSubmit = evt => {
         evt.preventDefault();
 
-        const obj = {
+        obj = {
             name: evt.target.elements.inputName.value,
             number: evt.target.elements.inputNumber.value
         }
-        console.log(obj);
+
         // const { name, value } = evt.target;
         // onSubmit({ name, number });
         // valueStore.push({ name: { name }, number: { number } })
-        resetContactForm();
+        // resetContactForm();
         evt.target.reset();
     };
 
-    const resetContactForm = () => {
-        setNumber('');
-        setName('');
+    // const resetContactForm = () => {
+    //     setNumber('');
+    //     setName('');
 
-    };
+    // };
 
     const numberInputId = uuidv4();
     const nameInputId = uuidv4();
