@@ -2,22 +2,21 @@
   display: block;
   width: 320px;
 }
-.btn{
+.btn {
   margin-left: 10px;
   cursor: pointer;
-  }
-.contactitem:not(:last-child){
+}
+.contactitem:not(:last-child) {
   margin-bottom: 10px;
 }
-.btn:hover{
+.btn:hover {
   background-color: red;
-  
 }
 
-.contactitem:hover{
+.contactitem:hover {
   color: red;
 }
 
-.contactitem{
+.contactitem {
   width: auto;
 }

@@ -6,21 +6,18 @@
 }
 
 .formItem {
-background-color: aliceblue;
+  background-color: orange;
   display: block;
   width: 180px;
   height: 25px;
-
 }
-.btn{
+.btn {
   margin-top: 10px;
 }
-.number{
+.number {
   margin-top: 10px;
 }
 
-.btn:focus{
-
+.btn:focus {
   background-color: chartreuse;
-  
 }
