@@ -1,56 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import s from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import * as actions from '../../redux/actions';
 
+console.log(actions);
 
-function ContactForm() {
+function ContactForm({ onSubmit, valueStore }) {
 
-    // const [name, setName] = useState('');
-    // const [number, setNumber] = useState('');
-
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     switch (name)
-    //     {
-    //         case 'name':
-    //             setName(value);
-    //             break;
-
-    //         case 'number':
-    //             setNumber(value);
-    //             break;
-
-    //         default:
-    //             return;
-    //     }
-    // };
 
     const handleSubmit = evt => {
         evt.preventDefault();
 
-        obj = {
-            name: evt.target.elements.inputName.value,
-            number: evt.target.elements.inputNumber.value
-        }
+        if (valueStore.some(contact => contact.name === evt.target.elements.inputName.value))
+        {
+            alert(`${ evt.target.elements.inputName.value } is already in contacts`)
+        } else
+        {
+            onSubmit({
+                name: evt.target.elements.inputName.value,
+                number: evt.target.elements.inputNumber.value,
+                id: uuidv4(),
+            });
 
-        // const { name, value } = evt.target;
-        // onSubmit({ name, number });
-        // valueStore.push({ name: { name }, number: { number } })
-        // resetContactForm();
+        };
+
         evt.target.reset();
     };
 
-    // const resetContactForm = () => {
-    //     setNumber('');
-    //     setName('');
-
-    // };
-
     const numberInputId = uuidv4();
     const nameInputId = uuidv4();
+
     return (
         <form onSubmit={handleSubmit} className={s.form}>
             <span>Name</span>
@@ -62,8 +43,6 @@ function ContactForm() {
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
                     required
-                    // onChange={handleChange}
-                    // value={name}
                     id={nameInputId}
                 />
             </label>
@@ -76,8 +55,6 @@ function ContactForm() {
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
                     required
-                    // onChange={handleChange}
-                    // value={number}
                     id={numberInputId}
                 />
             </label>
@@ -86,16 +63,20 @@ function ContactForm() {
     )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
 
-    valueStore: state.contacts.items,
+    return {
+        valueStore: state.contacts.items,
+    };
 
-});
+};
 
-const mapDispatchToProps = dispatch => ({
-    onSubmit: (nn) => dispatch(actions.addContact(nn)),
-    // onDecrement: value => dispatch(actions.decrement(value)),
-});
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (newContact) => dispatch(actions.addContact(newContact)),
+    }
+
+};
 
 ContactForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,

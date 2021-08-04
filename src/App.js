@@ -4,6 +4,7 @@ import Filter from './components/Filter/Filter';
 import ContactList from './components/ContactList/ContactList';
 import s from './App.module.css';
 import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
 
 
 // const contactsArr = [
@@ -25,20 +26,20 @@ function App() {
   }, [contacts]);
 
 
-  const formSubmithandler = (formData) => {
+  // const formSubmithandler = (formData) => {
 
-    if (contacts.some(contact => contact.name === formData.name))
-    {
-      alert(`${ formData.name } is already in contacts`)
-    } else
-    {
-      const addContact = { ...formData, id: uuidv4() };
+  //   if (contacts.some(contact => contact.name === formData.name))
+  //   {
+  //     alert(`${ formData.name } is already in contacts`)
+  //   } else
+  //   {
+  //     const addContact = { ...formData, id: uuidv4() };
 
-      setContacts(prevContacts => [addContact, ...prevContacts])
+  //     setContacts(prevContacts => [addContact, ...prevContacts])
 
-    };
+  //   };
 
-  }
+  // }
 
   const deleteContact = contactId => {
 
@@ -56,12 +57,12 @@ function App() {
 
   const filteredContactList = contacts.filter(contact =>
     contact.name.toLocaleLowerCase().includes(filteredContactToLowerCase),
-  )
-
+  );
+  // onSubmit={formSubmithandler}
   return (
     <div className={s.container}>
       <h1 className={s.title}>Phonebook</h1>
-      <ContactForm onSubmit={formSubmithandler} />
+      <ContactForm />
       {contacts.length !== 0 && <h2 className={s.title}>Contacts</h2>}
       {contacts.length !== 0 && <Filter value={filtered} onChange={filtеredValue} />}
       <ContactList
@@ -73,4 +74,12 @@ function App() {
 
 }
 
-export default App;
+const mapStateToProps = state => {
+
+  return {
+    valueStore: state.contacts.items,
+  };
+
+};
+
+export default connect(mapStateToProps, null)(App);
