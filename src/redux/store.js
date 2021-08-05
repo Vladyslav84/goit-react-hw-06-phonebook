@@ -1,39 +1,66 @@
+// import * as actions from '../redux/actions';
+import React, { useEffect } from 'react';
 import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const storeState =
 {
     contacts: {
-        items: [],
-        filter: ''
+        items: JSON.parse(localStorage.getItem('contactsList')) ?? [],
+        filter: '',
     }
 };
 
-const reducer = (state = storeState, action) => {
+// useEffect(() => {
 
-    switch (action.type) {
+
+
+// }, [state.contacts.items]);
+
+
+const reducer = (state = storeState, actions) => {
+
+    // localStorage.setItem('contactsList', JSON.stringify(state.contacts.items));
+
+    // console.log(state.contacts.items);
+
+    switch (actions.type)
+    {
         case "contacts/addContact":
             return {
                 ...state,
                 contacts: {
                     ...state.contacts,
-                    item:[action.payload,...state.contacts.item],
+                    items: [actions.payload, ...state.contacts.items],
                 }
             }
-    
-            case "contacts/deleteContact":
+
+        case "contacts/deleteContact":
             return {
                 ...state,
                 contacts: {
                     ...state.contacts,
-                    item: state.contacts.item.push(action.payload)
+                    items: state.contacts.items.filter(contact => contact.id !== actions.payload),
                 }
             }
-            default:
-              return state;
+        case "contacts/filter":
+
+            return {
+
+                ...state,
+                contacts: {
+                    ...state.contacts,
+                    items: actions.payload !== '' ? state.contacts.items.filter(contact =>
+                        contact.name.toLocaleLowerCase().includes(actions.payload)) : state.contacts.items,
+                    filter: actions.payload
+                }
+            }
+        default:
+            return state;
     }
 
 };
 
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 export default store;
