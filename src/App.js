@@ -27,6 +27,8 @@ function App() {
 
   const formSubmithandler = (formData) => {
 
+    console.log(formData)
+
     if (contacts.some(contact => contact.name === formData.name))
     {
       alert(`${ formData.name } is already in contacts`)
