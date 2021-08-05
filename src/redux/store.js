@@ -1,17 +1,26 @@
+// import * as actions from '../redux/actions';
+import React, { useEffect } from 'react';
 import { createStore } from 'redux';
-import * as actions from '../redux/actions';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const storeState =
 {
     contacts: {
-        items: [
-
-        ],
-        filter: ''
+        items: JSON.parse(localStorage.getItem('contactsList')) ?? [],
+        filter: '',
     }
 };
 
+// useEffect(() => {
+
+
+
+// }, [state.contacts.items]);
+
+
 const reducer = (state = storeState, actions) => {
+
+    // localStorage.setItem('contactsList', JSON.stringify(state.contacts.items));
 
     // console.log(state.contacts.items);
 
@@ -32,7 +41,18 @@ const reducer = (state = storeState, actions) => {
                 contacts: {
                     ...state.contacts,
                     items: state.contacts.items.filter(contact => contact.id !== actions.payload),
-                    dd: console.log(state.contacts.items)
+                }
+            }
+        case "contacts/filter":
+
+            return {
+
+                ...state,
+                contacts: {
+                    ...state.contacts,
+                    items: actions.payload !== '' ? state.contacts.items.filter(contact =>
+                        contact.name.toLocaleLowerCase().includes(actions.payload)) : state.contacts.items,
+                    filter: actions.payload
                 }
             }
         default:
@@ -42,5 +62,5 @@ const reducer = (state = storeState, actions) => {
 };
 
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 export default store;

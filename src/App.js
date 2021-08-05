@@ -14,16 +14,16 @@ import { connect } from 'react-redux';
 //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 // ]
 
-function App() {
+function App({ valueStore }) {
 
-  const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem('contactsList')) ?? []);
-  const [filtered, setFiltered] = useState('');
+  // const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem('contactsList')) ?? []);
+  // const [filtered, setFiltered] = useState('');
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    localStorage.setItem('contactsList', JSON.stringify(contacts));
+  //   localStorage.setItem('contactsList', JSON.stringify(contacts));
 
-  }, [contacts]);
+  // }, [contacts]);
 
 
   // const formSubmithandler = (formData) => {
@@ -41,33 +41,33 @@ function App() {
 
   // }
 
-  const deleteContact = contactId => {
+  // const deleteContact = contactId => {
 
-    setContacts(prevContacts => (prevContacts.filter(contact => contact.id !== contactId)))
+  //   setContacts(prevContacts => (prevContacts.filter(contact => contact.id !== contactId)))
 
-  };
+  // };
 
-  const filtеredValue = evt => {
+  // const filtеredValue = evt => {
 
-    setFiltered(evt.currentTarget.value);
+  //   setFiltered(evt.currentTarget.value);
 
-  }
+  // }
 
-  const filteredContactToLowerCase = filtered.toLocaleLowerCase();
+  // const filteredContactToLowerCase = filtered.toLocaleLowerCase();
 
-  const filteredContactList = contacts.filter(contact =>
-    contact.name.toLocaleLowerCase().includes(filteredContactToLowerCase),
-  );
+  // const filteredContactList = contacts.filter(contact =>
+  //   contact.name.toLocaleLowerCase().includes(filteredContactToLowerCase),
+  // );
   // onSubmit={formSubmithandler}
   return (
     <div className={s.container}>
       <h1 className={s.title}>Phonebook</h1>
       <ContactForm />
-      {contacts.length !== 0 && <h2 className={s.title}>Contacts</h2>}
-      {contacts.length !== 0 && <Filter value={filtered} onChange={filtеredValue} />}
+      {valueStore.length !== 0 && <h2 className={s.title}>Contacts</h2>}
+      {valueStore.length !== 0 && <Filter />}
       <ContactList
-        contactsArr={filteredContactList}
-        onDeleteContact={deleteContact}
+      // contactsArr={filteredContactList}
+      // onDeleteContact={deleteContact} value={filtered}
       />
     </div>
   );
@@ -78,6 +78,7 @@ const mapStateToProps = state => {
 
   return {
     valueStore: state.contacts.items,
+    // valueFilter: state.contacts.filter
   };
 
 };

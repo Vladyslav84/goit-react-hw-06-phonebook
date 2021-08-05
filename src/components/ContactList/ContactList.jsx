@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './ContactList.module.css';
 import PropTypes from 'prop-types';
 // import s from './ContactList.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 
+
 const ContactList = ({ valueStore, onDeleteContact }) => {
+
+
+  useEffect(() => {
+
+    localStorage.setItem('contactsList', JSON.stringify(valueStore));
+
+  }, [valueStore]);
 
   return (
     <ul className={s.contactList}>
