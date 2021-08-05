@@ -1,5 +1,5 @@
 // import * as actions from '../redux/actions';
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -7,7 +7,7 @@ const storeState =
 {
     contacts: {
         items: JSON.parse(localStorage.getItem('contactsList')) ?? [],
-        filter: '',
+        filter: [],
     }
 };
 
@@ -20,6 +20,11 @@ const storeState =
 
 const reducer = (state = storeState, actions) => {
 
+    const filteredContactList = state.contacts.items.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(actions.payload),
+  )
+    
+console.log(filteredContactList)
     // localStorage.setItem('contactsList', JSON.stringify(state.contacts.items));
 
     // console.log(state.contacts.items);
@@ -32,7 +37,7 @@ const reducer = (state = storeState, actions) => {
                 contacts: {
                     ...state.contacts,
                     items: [actions.payload, ...state.contacts.items],
-                }
+                   }
             }
 
         case "contacts/deleteContact":
@@ -50,9 +55,8 @@ const reducer = (state = storeState, actions) => {
                 ...state,
                 contacts: {
                     ...state.contacts,
-                    items: actions.payload !== '' ? state.contacts.items.filter(contact =>
-                        contact.name.toLocaleLowerCase().includes(actions.payload)) : state.contacts.items,
-                    filter: actions.payload
+                    filter: filteredContactList,
+                    
                 }
             }
         default:

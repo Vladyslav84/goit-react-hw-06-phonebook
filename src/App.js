@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 // ]
 
-function App({ valueStore }) {
+function App({ valueStore, valueFilter }) {
 
   // const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem('contactsList')) ?? []);
   // const [filtered, setFiltered] = useState('');
@@ -66,7 +66,7 @@ function App({ valueStore }) {
       {valueStore.length !== 0 && <h2 className={s.title}>Contacts</h2>}
       {valueStore.length !== 0 && <Filter />}
       <ContactList
-      // contactsArr={filteredContactList}
+      // valueStore={valueFilter}
       // onDeleteContact={deleteContact} value={filtered}
       />
     </div>
@@ -78,6 +78,7 @@ const mapStateToProps = state => {
 
   return {
     valueStore: state.contacts.items,
+    valueFilter: state.contacts.filter
     // valueFilter: state.contacts.filter
   };
 

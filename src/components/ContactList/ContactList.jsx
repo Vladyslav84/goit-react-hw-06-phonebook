@@ -6,18 +6,18 @@ import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 
 
-const ContactList = ({ valueStore, onDeleteContact }) => {
+const ContactList = ({ valueFilter, onDeleteContact }) => {
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    localStorage.setItem('contactsList', JSON.stringify(valueStore));
+  //   localStorage.setItem('contactsList', JSON.stringify(valueStore));
 
-  }, [valueStore]);
+  // }, [valueStore]);
 
   return (
     <ul className={s.contactList}>
-      {valueStore.map((user) => (
+      {valueFilter.map((user) => (
 
         <li key={user.id} className={s.contactitem} >
           <span>{user.name} {user.number}</span>
@@ -34,6 +34,7 @@ const mapStateToProps = state => {
 
   return {
     valueStore: state.contacts.items,
+    valueFilter: state.contacts.filter
   };
 
 };
