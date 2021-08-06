@@ -6,7 +6,14 @@ import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 
 
-const ContactList = ({ valueFilter, onDeleteContact }) => {
+const ContactList = ({ allContacts, filter, onDeleteContact }) => {
+
+
+  const filteredContactList = allContacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filter),
+  )
+
+  // console.log(filteredContactList)
 
 
   // useEffect(() => {
@@ -17,7 +24,7 @@ const ContactList = ({ valueFilter, onDeleteContact }) => {
 
   return (
     <ul className={s.contactList}>
-      {valueFilter.map((user) => (
+      {filteredContactList.map((user) => (
 
         <li key={user.id} className={s.contactitem} >
           <span>{user.name} {user.number}</span>
@@ -33,8 +40,8 @@ const ContactList = ({ valueFilter, onDeleteContact }) => {
 const mapStateToProps = state => {
 
   return {
-    valueStore: state.contacts.items,
-    valueFilter: state.contacts.filter
+    allContacts: state.contacts.items,
+    filter: state.contacts.filter
   };
 
 };

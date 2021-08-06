@@ -34,7 +34,7 @@ function ContactForm({ onSubmit, valueStore }) {
 
     return (
         <form onSubmit={handleSubmit} className={s.form}>
-            <span>Name</span>
+            <span>Namegggggggggg</span>
             <label className={s.formItem}>
                 <input
                     autoComplete="off"
