@@ -49,16 +49,11 @@ const reducer = (state = storeState, actions) => {
                 }
             }
         case "contacts/filter":
-
             return {
-
                 ...state,
                 contacts: {
-                    // ...state.contacts,
+                    ...state.contacts,
                     filter: actions.payload,
-                    items: state.contacts.items.filter(contact =>
-    contact.name.toLocaleLowerCase().includes(actions.payload),
-  )
                     
                 }
             }

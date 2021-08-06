@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react';
 import s from './ContactList.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import s from './ContactList.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 
 
-const ContactList = ({ valueStore, onDeleteContact }) => {
+const ContactList = ({ allContacts,filter, onDeleteContact }) => {
+
+  const filteredContactList = allContacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filter));
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   localStorage.setItem('contactsList', JSON.stringify(valueStore));
+    localStorage.setItem('contactsList', JSON.stringify(allContacts));
 
-  // }, [valueStore]);
+  }, [allContacts]);
 
   return (
     <ul className={s.contactList}>
-      {valueStore.map((user) => (
+      {filteredContactList.map((user) => (
 
         <li key={user.id} className={s.contactitem} >
           <span>{user.name} {user.number}</span>
@@ -46,10 +49,10 @@ const mapDispatchToProps = dispatch => {
 
 };
 
-ContactList.prototype = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-}
+// ContactList.prototype = {
+//   name: PropTypes.string.isRequired,
+//   number: PropTypes.string.isRequired,
+//   id: PropTypes.string.isRequired,
+// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
