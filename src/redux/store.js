@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const storeState =
 {
     contacts: {
-        items: [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' }],
+        items: JSON.parse(localStorage.getItem('contactsList')) ?? [],
         filter: '',
     }
 };
@@ -16,9 +16,18 @@ const storeState =
 
 
 // }, [state.contacts.items]);
-
+//     const filteredContactList = storeState.contacts.items.filter(contact =>
+//     contact.name.toLocaleLowerCase().includes(storeState.contacts.filter),
+//   )
+    
+// console.log(filteredContactList)
 
 const reducer = (state = storeState, actions) => {
+    
+
+    // localStorage.setItem('contactsList', JSON.stringify(state.contacts.items));
+
+    // console.log(state.contacts.items);
 
     switch (actions.type)
     {
@@ -45,9 +54,12 @@ const reducer = (state = storeState, actions) => {
 
                 ...state,
                 contacts: {
-                    ...state.contacts,
+                    // ...state.contacts,
                     filter: actions.payload,
-
+                    items: state.contacts.items.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(actions.payload),
+  )
+                    
                 }
             }
         default:
