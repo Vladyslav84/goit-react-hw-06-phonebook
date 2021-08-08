@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { addContact} from '../../redux/actions';
+import { addContact} from '../../redux/slices/contacts';
 
 
 export default function ContactForm() {

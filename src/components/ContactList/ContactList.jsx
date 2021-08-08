@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import s from './ContactList.module.css';
 import {  useSelector, useDispatch } from 'react-redux';
-import * as actions from '../../redux/actions';
+import * as actions from '../../redux/slices/contacts';
 
 export default function ContactList  ()  {
   
