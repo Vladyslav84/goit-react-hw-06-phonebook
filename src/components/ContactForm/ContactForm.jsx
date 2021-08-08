@@ -1,29 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
-import * as actions from '../../redux/actions';
+import { addContact} from '../../redux/actions';
 
-console.log(actions);
 
-function ContactForm({ onSubmit, valueStore }) {
-
+export default function ContactForm() {
+    const dispatch = useDispatch();
+    const allContacts = useSelector(state => state.reducerContacts.value);
 
     const handleSubmit = evt => {
         evt.preventDefault();
 
-        if (valueStore.some(contact => contact.name === evt.target.elements.inputName.value))
+        if (allContacts.some(contact => contact.name === evt.target.elements.inputName.value))
         {
             alert(`${ evt.target.elements.inputName.value } is already in contacts`)
         } else
         {
-            onSubmit({
+
+            dispatch(addContact({
                 name: evt.target.elements.inputName.value,
                 number: evt.target.elements.inputNumber.value,
                 id: uuidv4(),
-            });
-
+            }))
         };
 
         evt.target.reset();
@@ -62,25 +61,3 @@ function ContactForm({ onSubmit, valueStore }) {
         </form>
     )
 }
-
-const mapStateToProps = state => {
-
-    return {
-        valueStore: state.contacts.items,
-    };
-
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onSubmit: (newContact) => dispatch(actions.addContact(newContact)),
-    }
-
-};
-
-ContactForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
