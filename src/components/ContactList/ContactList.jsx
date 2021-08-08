@@ -1,19 +1,13 @@
 import React, { useEffect } from 'react';
 import s from './ContactList.module.css';
-// import PropTypes from 'prop-types';
-// import s from './ContactList.module.css';
 import {  useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
-// import { addContact, deleteContact, filter } from '../../redux/actions';
-
 
 export default function ContactList  ()  {
   
   const allContacts = useSelector(state => state.reducerContacts.value);
-  const filter = useSelector(state => state);
+  const filter = useSelector(state => state.reducerContacts.filter);
   const dispatch = useDispatch();
-
-  console.log(filter)
 
   const filteredContactList = allContacts.filter(contact =>
     contact.name.toLocaleLowerCase().includes(filter));
@@ -38,4 +32,3 @@ export default function ContactList  ()  {
     </ul>
   )
 }
-
