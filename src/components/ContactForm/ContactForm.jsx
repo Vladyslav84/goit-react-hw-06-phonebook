@@ -7,7 +7,7 @@ import { addContact} from '../../redux/actions';
 
 export default function ContactForm() {
     const dispatch = useDispatch();
-    const allContacts = useSelector(state => state.reducerContacts.value);
+    const allContacts = useSelector(state => state.contactsSlice);
 
     const handleSubmit = evt => {
         evt.preventDefault();

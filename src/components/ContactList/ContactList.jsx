@@ -5,8 +5,8 @@ import * as actions from '../../redux/actions';
 
 export default function ContactList  ()  {
   
-  const allContacts = useSelector(state => state.reducerContacts.value);
-  const filter = useSelector(state => state.reducerContacts.filter);
+  const allContacts = useSelector(state => state.contactsSlice);
+  const filter = useSelector(state => state.filterSlice);
   const dispatch = useDispatch();
 
   const filteredContactList = allContacts.filter(contact =>

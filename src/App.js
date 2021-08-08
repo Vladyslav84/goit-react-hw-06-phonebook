@@ -5,7 +5,7 @@ import s from './App.module.css';
 import { useSelector } from 'react-redux';
 
 export default function App() {
-const allContacts = useSelector(state => state.reducerContacts.value);
+const allContacts = useSelector(state => state.contactsSlice);
   return (
     <div className={s.container}>
       <h1 className={s.title}>Phonebook</h1>
